@@ -1,4 +1,5 @@
-class Cast:
+from game.casting.artifact import Artifact
+class Cast(Artifact):
     """A collection of actors.
 
     The responsibility of a cast is to keep track of a collection of actors. It has methods for 
