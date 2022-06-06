@@ -76,8 +76,11 @@ def main():
         artifact.set_font_size(FONT_SIZE)
         artifact.set_color(color)
         artifact.set_position(position)
-        artifact.set_message(message)
+        artifact.artifact_type()
+        artifact.point_gen()
+        artifact.set_message(artifact.worth)
         cast.add_actor("artifacts", artifact)
+        cast.calculate_total_points()
     
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)
