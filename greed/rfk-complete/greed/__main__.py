@@ -23,7 +23,7 @@ COLS = 60
 ROWS = 40
 CAPTION = "Catch The Rocks"
 WHITE = Color(255, 255, 255)
-DEFAULT_ARTIFACTS = 4
+DEFAULT_ARTIFACTS = 2
 
 
 def main():
@@ -33,7 +33,7 @@ def main():
     
     # create the banner
     banner = Actor()
-    banner.set_text("")
+    banner.set_text("Total:0 Last:0")
     banner.set_font_size(FONT_SIZE)
     banner.set_color(WHITE)
     banner.set_position(Point(CELL_SIZE, 0))
@@ -59,8 +59,8 @@ def main():
             text = "o"
         else:
             text = "*"
-        artifact.set_text(text)       
-        x = random.randint(1, 599)
+
+        x = random.randint(1, COLS - 1)
         y = 0
         position = Point(x, y)
         position = position.scale(CELL_SIZE)
@@ -69,7 +69,8 @@ def main():
         g = random.randint(0, 255)
         b = random.randint(0, 255)
         color = Color(r, g, b)
-            
+
+        artifact.set_text(text)     
         artifact.set_font_size(FONT_SIZE)
         artifact.set_color(color)
         artifact.set_position(position)

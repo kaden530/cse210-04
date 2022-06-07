@@ -60,9 +60,9 @@ class Director:
         for artifact in artifacts:
             artifact.move_next(max_y)
             if robot.get_position().equals(artifact.get_position()):
-                points = artifact.get_points()
-                total = robot.set_total(points) 
-                banner.set_text(f"Total: {total} last: {points}")   
+                score = artifact.get_points()
+                total = robot.set_total(score) 
+                banner.set_text(f"Total: {total} last: {score}")   
         
     def _do_outputs(self, cast):
         """Draws the actors on the screen.

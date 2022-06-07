@@ -15,7 +15,7 @@ class Artifact(Actor):
         self.select = 0
         self.worth = 0
         self._position = 0
-        self.speed = 1
+        self.speed = 5
     
     def artifact_type(self):
         self.select = random.randint(1,2)
@@ -34,6 +34,7 @@ class Artifact(Actor):
         
     def placement(self):
         self._position = random.randint(1,600)
+        return self._position
 
 
 
@@ -52,7 +53,7 @@ class Artifact(Actor):
             message (string): The given message.
         """
         self._points = self.worth + message
-        super().points = self._points
+        super().score = self._points
         return message
 
     def get_velocity(self):
@@ -63,7 +64,7 @@ class Artifact(Actor):
         """
         return self._velocity
     
-    def move_next(self, max_y):
+    def move_next(self, x):
         """Moves the actor to its next position according to its velocity. Will wrap the position 
         from one side of the screen to the other when it reaches the given maximum x and y values.
         
@@ -71,6 +72,6 @@ class Artifact(Actor):
             max_x (int): The maximum x value.
             max_y (int): The maximum y value.
         """
-        x = self._position
-        y = (self._velocity.get_y()) + self.speed
+        x = self._position.get_x()
+        y = (self._position.get_y() + self._velocity.get_y()) + self.speed
         self._position = Point(x, y)

@@ -18,6 +18,7 @@ class Actor:
 
     def __init__(self):
         """Constructs a new Actor."""
+        self.score = 0
         self._text = ""
         self._font_size = 15
         self._color = Color(255, 255, 255)
@@ -115,3 +116,12 @@ class Actor:
             velocity (Point): The given velocity.
         """
         self._velocity = velocity
+
+    def set_total(self, points):
+        """Updates the message to the given one.
+        
+        Args:
+            message (string): The given message.
+        """
+        self.score += points
+        return self.score
