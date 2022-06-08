@@ -63,7 +63,7 @@ class Director:
                 score = artifact.get_points()
                 total = robot.set_total(score) 
                 banner.set_text(f"Total: {total} last: {score}")   
-        
+                cast.remove_actor( "artifacts", artifact)
     def _do_outputs(self, cast):
         """Draws the actors on the screen.
         
