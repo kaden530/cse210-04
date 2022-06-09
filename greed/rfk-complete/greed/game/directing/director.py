@@ -1,5 +1,7 @@
 from ..casting.artifact import Artifact
-from ..casting.actor import Actor
+from game.shared.point import Point
+from game.shared.color import Color
+import random
 import __main__
 
 
@@ -63,6 +65,8 @@ class Director:
         max_y = self._video_service.get_height()
         robot.move_next(max_x, max_y)
 
+        artifacts_removed = 0
+
         for artifact in artifacts:
             artifact.move_next(max_y)
             if robot.get_position().equals(artifact.get_position()):
@@ -70,6 +74,36 @@ class Director:
                 self._total_points = robot.set_total(self._current_score)
                 banner.set_text(f"Total: {self._total_points} last: {self._current_score}")
                 cast.remove_actor("artifacts", artifact)
+                artifacts_removed +=1
+
+        for i in range(artifacts_removed):
+            artifact = Artifact()
+            COLS = 60
+            ROWS = 40
+            CELL_SIZE = 15
+            FONT_SIZE = 15
+            symbol = artifact.artifact_type()
+            if symbol in "rock":
+                text = "o"
+            else:
+                text = "*"
+
+            x = random.randint(1, COLS - 1)
+            y = random.randint(1, ROWS - 1)
+            position = Point(x, y)
+            position = position.scale(CELL_SIZE)
+
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
+            color = Color(r, g, b)
+
+            artifact.set_text(text)
+            artifact.set_font_size(FONT_SIZE)
+            artifact.set_color(color)
+            artifact.set_position(position)
+            artifact.point_gen()
+            cast.add_actor("artifacts", artifact)
 
     def _do_outputs(self, cast):
         """Draws the actors on the screen.
