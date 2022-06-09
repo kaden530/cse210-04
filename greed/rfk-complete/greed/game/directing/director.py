@@ -51,7 +51,8 @@ class Director:
         robot.set_velocity(velocity)
 
     def _do_updates(self, cast):
-        """Updates the robot's position and resolves any collisions with artifacts.
+        """Updates the robot's position and resolves any collisions with artifacts.  Also recreates artifacts when the
+        robot collides with one
         
         Args:
             cast (Cast): The cast of actors.
@@ -66,7 +67,7 @@ class Director:
         robot.move_next(max_x, max_y)
 
         artifacts_removed = 0
-
+        # loop through artifacts to display on screen and show the score
         for artifact in artifacts:
             artifact.move_next(max_y)
             if robot.get_position().equals(artifact.get_position()):
@@ -75,7 +76,7 @@ class Director:
                 banner.set_text(f"Total: {self._total_points} last: {self._current_score}")
                 cast.remove_actor("artifacts", artifact)
                 artifacts_removed +=1
-
+        # recreate the artifacts for the amount that was removed
         for i in range(artifacts_removed):
             artifact = Artifact()
             COLS = 60
