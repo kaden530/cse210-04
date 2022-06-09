@@ -2,6 +2,7 @@ from game.casting.actor import Actor
 import random
 from game.shared.point import Point
 
+
 class Artifact(Actor):
     """
     Rocks and Gems that fall 
@@ -14,6 +15,7 @@ class Artifact(Actor):
         self.artifact = ""
         self.select = 0
         self.worth = 0
+        self._points = 0
         self._position = 0
         self.speed = 5
     
@@ -65,13 +67,16 @@ class Artifact(Actor):
         return self._velocity
     
     def move_next(self, x):
-        """Moves the actor to its next position according to its velocity. Will wrap the position 
+        """Moves the actor to its next position according to its velocity. Will wrap the position
         from one side of the screen to the other when it reaches the given maximum x and y values.
-        
+
         Args:
             max_x (int): The maximum x value.
-            max_y (int): The maximum y value.
         """
         x = self._position.get_x()
         y = (self._position.get_y() + self._velocity.get_y()) + self.speed
+
+        if y > 600:
+            y = 0
+
         self._position = Point(x, y)

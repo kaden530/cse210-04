@@ -1,4 +1,6 @@
-from game.casting.artifact import Artifact
+from ..casting.artifact import Artifact
+
+
 class Cast(Artifact):
     """A collection of actors.
 
@@ -13,7 +15,6 @@ class Cast(Artifact):
         """Constructs a new Actor."""
         super().__init__()
         self._actors = {}
-        self.total_points = 0
         
     def add_actor(self, group, actor):
         """Adds an actor to the given group.
@@ -76,14 +77,3 @@ class Cast(Artifact):
         """
         if group in self._actors:
             self._actors[group].remove(actor)
-
-    def calculate_total_points(self):
-        """Using Artifacts functions, total up the points to display to the player
-        
-        Args:
-            none
-        """
-
-        totalPoints = self.get_message() + self.total_points
-        self.total_points = totalPoints
-        

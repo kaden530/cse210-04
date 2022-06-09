@@ -23,7 +23,7 @@ COLS = 60
 ROWS = 40
 CAPTION = "Catch The Rocks"
 WHITE = Color(255, 255, 255)
-DEFAULT_ARTIFACTS = 2
+DEFAULT_ARTIFACTS = 100
 
 
 def main():
@@ -45,12 +45,12 @@ def main():
     position = Point(x, y)
 
     robot = Actor()
-    robot.set_text("[*]")
+    robot.set_text("#")
     robot.set_font_size(FONT_SIZE)
     robot.set_color(WHITE)
     robot.set_position(position)
     cast.add_actor("robots", robot)
-    
+
     # create the artifacts
     for i in range(DEFAULT_ARTIFACTS):
         artifact = Artifact()
@@ -61,7 +61,7 @@ def main():
             text = "*"
 
         x = random.randint(1, COLS - 1)
-        y = 0
+        y = random.randint(1, ROWS - 1)
         position = Point(x, y)
         position = position.scale(CELL_SIZE)
 
@@ -70,16 +70,13 @@ def main():
         b = random.randint(0, 255)
         color = Color(r, g, b)
 
-        artifact.set_text(text)     
+        artifact.set_text(text)
         artifact.set_font_size(FONT_SIZE)
         artifact.set_color(color)
         artifact.set_position(position)
-    #    artifact.artifact_type()
         artifact.point_gen()
-#        artifact.set_message(artifact.worth)
         cast.add_actor("artifacts", artifact)
-#        cast.calculate_total_points()
-    
+
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)
     video_service = VideoService(CAPTION, MAX_X, MAX_Y, CELL_SIZE, FRAME_RATE)

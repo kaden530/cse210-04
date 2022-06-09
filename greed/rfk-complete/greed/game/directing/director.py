@@ -1,3 +1,8 @@
+from ..casting.artifact import Artifact
+from ..casting.actor import Actor
+import __main__
+
+
 class Director:
     """A person who directs the game. 
     
@@ -17,7 +22,9 @@ class Director:
         """
         self._keyboard_service = keyboard_service
         self._video_service = video_service
-        
+        self._total_points = 0
+        self._current_score = 0
+
     def start_game(self, cast):
         """Starts the game using the given cast. Runs the main game loop.
 
@@ -39,7 +46,7 @@ class Director:
         """
         robot = cast.get_first_actor("robots")
         velocity = self._keyboard_service.get_direction()
-        robot.set_velocity(velocity)        
+        robot.set_velocity(velocity)
 
     def _do_updates(self, cast):
         """Updates the robot's position and resolves any collisions with artifacts.
@@ -51,19 +58,19 @@ class Director:
         robot = cast.get_first_actor("robots")
         artifacts = cast.get_actors("artifacts")
 
-        banner.set_text("")
+        banner.set_text(f"Total: {self._total_points} Last: {self._current_score}   ")
         max_x = self._video_service.get_width()
         max_y = self._video_service.get_height()
         robot.move_next(max_x, max_y)
 
-        
         for artifact in artifacts:
             artifact.move_next(max_y)
             if robot.get_position().equals(artifact.get_position()):
-                score = artifact.get_points()
-                total = robot.set_total(score) 
-                banner.set_text(f"Total: {total} last: {score}")   
-                cast.remove_actor( "artifacts", artifact)
+                self._current_score = artifact.get_points()
+                self._total_points = robot.set_total(self._current_score)
+                banner.set_text(f"Total: {self._total_points} last: {self._current_score}")
+                cast.remove_actor("artifacts", artifact)
+
     def _do_outputs(self, cast):
         """Draws the actors on the screen.
         
